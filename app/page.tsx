@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 const products = [
   {
     name: "Aura Leather Bag",
@@ -47,6 +49,7 @@ const categoryImages: Record<string, string> = {
 };
 
 export default function Home() {
+  const [cart, setCart] = useState(0);
   return (
     <main className="min-h-screen bg-[#f7f5f0] text-[#171717]">
       
@@ -84,8 +87,8 @@ export default function Home() {
             ♡
           </button>
           <button className="text-lg transition hover:opacity-50">
-            🛒
-          </button>
+  🛒 {cart}
+</button>
         </div>
       </nav>
 
@@ -203,6 +206,12 @@ export default function Home() {
                     <p className="text-sm">
                       {product.price}
                     </p>
+                    <button
+  onClick={() => setCart(cart + 1)}
+  className="mt-4 w-full bg-black py-3 text-sm text-white transition hover:bg-black/80"
+>
+  Add to Cart
+</button>
                   </div>
                 </div>
               </article>
