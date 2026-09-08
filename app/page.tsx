@@ -3,21 +3,29 @@ const products = [
     name: "Aura Leather Bag",
     price: "$129",
     category: "Accessories",
+    image:
+      "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Luna Minimal Watch",
     price: "$189",
     category: "Watches",
+    image:
+      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Cloud Knit Sweater",
     price: "$89",
     category: "Fashion",
+    image:
+      "https://images.unsplash.com/photo-1618932260643-eee4a2f652a6?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Nova Signature Shoes",
     price: "$159",
     category: "Footwear",
+    image:
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
   },
 ];
 
@@ -27,6 +35,16 @@ const categories = [
   "Watches",
   "Footwear",
 ];
+const categoryImages: Record<string, string> = {
+  Fashion:
+    "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1000&q=80",
+  Accessories:
+    "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=1000&q=80",
+  Watches:
+    "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1000&q=80",
+  Footwear:
+    "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1000&q=80",
+};
 
 export default function Home() {
   return (
@@ -115,16 +133,24 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             {categories.map((category) => (
               <div
-                key={category}
-                className="group flex aspect-square cursor-pointer items-end bg-[#dedbd3] p-6 transition hover:bg-[#d2cec5]"
-              >
-                <div>
-                  <p className="text-lg font-medium">{category}</p>
-                  <p className="mt-1 text-xs text-black/50">
-                    Explore →
-                  </p>
-                </div>
-              </div>
+  key={category}
+  className="group relative aspect-square cursor-pointer overflow-hidden"
+>
+  <img
+    src={categoryImages[category]}
+    alt={category}
+    className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+  />
+
+  <div className="absolute inset-0 bg-black/20 transition group-hover:bg-black/30" />
+
+  <div className="absolute bottom-0 left-0 p-6 text-white">
+    <p className="text-lg font-medium">{category}</p>
+    <p className="mt-1 text-xs text-white/80">
+      Explore →
+    </p>
+  </div>
+</div>
             ))}
           </div>
         </div>
@@ -157,9 +183,11 @@ export default function Home() {
                     ♡
                   </div>
 
-                  <div className="flex h-full items-center justify-center text-sm text-black/40 transition duration-500 group-hover:scale-105">
-                    PRODUCT IMAGE
-                  </div>
+                  <img
+  src={product.image}
+  alt={product.name}
+  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+/>
                 </div>
 
                 <div className="pt-4">
