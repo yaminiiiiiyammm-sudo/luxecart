@@ -1,5 +1,7 @@
 "use client";
+
 import { useState } from "react";
+
 const products = [
   {
     name: "Aura Leather Bag",
@@ -37,6 +39,7 @@ const categories = [
   "Watches",
   "Footwear",
 ];
+
 const categoryImages: Record<string, string> = {
   Fashion:
     "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1000&q=80",
@@ -49,10 +52,11 @@ const categoryImages: Record<string, string> = {
 };
 
 export default function Home() {
-  const [cart, setCart] = useState(0);
+  const [cart, setCart] = useState<typeof products>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
   return (
     <main className="min-h-screen bg-[#f7f5f0] text-[#171717]">
-      
       {/* Announcement */}
       <div className="bg-black px-4 py-2 text-center text-xs tracking-[0.2em] text-white">
         FREE SHIPPING ON ORDERS OVER $100
@@ -68,12 +72,15 @@ export default function Home() {
           <a href="#" className="transition hover:opacity-50">
             Home
           </a>
+
           <a href="#" className="transition hover:opacity-50">
             Shop
           </a>
+
           <a href="#" className="transition hover:opacity-50">
             Categories
           </a>
+
           <a href="#" className="transition hover:opacity-50">
             About
           </a>
@@ -83,12 +90,17 @@ export default function Home() {
           <button className="transition hover:opacity-50">
             Search
           </button>
+
           <button className="text-lg transition hover:opacity-50">
             ♡
           </button>
-          <button className="text-lg transition hover:opacity-50">
-  🛒 {cart}
-</button>
+
+          <button
+            onClick={() => setIsCartOpen(true)}
+            className="text-lg transition hover:opacity-50"
+          >
+            🛒 {cart.length}
+          </button>
         </div>
       </nav>
 
@@ -136,24 +148,25 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             {categories.map((category) => (
               <div
-  key={category}
-  className="group relative aspect-square cursor-pointer overflow-hidden"
->
-  <img
-    src={categoryImages[category]}
-    alt={category}
-    className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
-  />
+                key={category}
+                className="group relative aspect-square cursor-pointer overflow-hidden"
+              >
+                <img
+                  src={categoryImages[category]}
+                  alt={category}
+                  className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                />
 
-  <div className="absolute inset-0 bg-black/20 transition group-hover:bg-black/30" />
+                <div className="absolute inset-0 bg-black/20 transition group-hover:bg-black/30" />
 
-  <div className="absolute bottom-0 left-0 p-6 text-white">
-    <p className="text-lg font-medium">{category}</p>
-    <p className="mt-1 text-xs text-white/80">
-      Explore →
-    </p>
-  </div>
-</div>
+                <div className="absolute bottom-0 left-0 p-6 text-white">
+                  <p className="text-lg font-medium">{category}</p>
+
+                  <p className="mt-1 text-xs text-white/80">
+                    Explore →
+                  </p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -187,10 +200,10 @@ export default function Home() {
                   </div>
 
                   <img
-  src={product.image}
-  alt={product.name}
-  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-/>
+                    src={product.image}
+                    alt={product.name}
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
                 </div>
 
                 <div className="pt-4">
@@ -206,13 +219,14 @@ export default function Home() {
                     <p className="text-sm">
                       {product.price}
                     </p>
-                    <button
-  onClick={() => setCart(cart + 1)}
-  className="mt-4 w-full bg-black py-3 text-sm text-white transition hover:bg-black/80"
->
-  Add to Cart
-</button>
                   </div>
+
+                  <button
+                    onClick={() => setCart([...cart, product])}
+                    className="mt-4 w-full bg-black py-3 text-sm text-white transition hover:bg-black/80"
+                  >
+                    Add to Cart
+                  </button>
                 </div>
               </article>
             ))}
@@ -286,9 +300,11 @@ export default function Home() {
             <a href="#" className="hover:text-white">
               Instagram
             </a>
+
             <a href="#" className="hover:text-white">
               Pinterest
             </a>
+
             <a href="#" className="hover:text-white">
               Contact
             </a>
@@ -299,6 +315,81 @@ export default function Home() {
           © 2026 LuxeCart. All rights reserved.
         </div>
       </footer>
+
+      {/* Cart Panel */}
+      {isCartOpen && (
+        <div className="fixed inset-0 z-50">
+          {/* Background overlay */}
+          <div
+            className="absolute inset-0 bg-black/40"
+            onClick={() => setIsCartOpen(false)}
+          />
+
+          {/* Cart */}
+          <div className="absolute right-0 top-0 h-full w-full max-w-md overflow-y-auto bg-white p-6 shadow-xl">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-medium">
+                Your Cart
+              </h2>
+
+              <button
+                onClick={() => setIsCartOpen(false)}
+                className="text-2xl"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="mt-8">
+              {cart.length === 0 ? (
+                <p className="text-sm text-black/50">
+                  Your cart is empty.
+                </p>
+              ) : (
+                <div className="space-y-6">
+                  {cart.map((product, index) => (
+                    <div
+                      key={`${product.name}-${index}`}
+                      className="flex gap-4 border-b pb-6"
+                    >
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="h-24 w-20 object-cover"
+                      />
+
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">
+                          {product.name}
+                        </p>
+
+                        <p className="mt-1 text-sm text-black/50">
+                          {product.category}
+                        </p>
+
+                        <p className="mt-2 text-sm">
+                          {product.price}
+                        </p>
+
+                        <button
+                          onClick={() =>
+                            setCart(
+                              cart.filter((_, i) => i !== index)
+                            )
+                          }
+                          className="mt-3 text-xs text-black/50 underline hover:text-black"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
