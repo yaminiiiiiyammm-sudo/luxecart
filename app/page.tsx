@@ -54,6 +54,11 @@ const categoryImages: Record<string, string> = {
 export default function Home() {
   const [cart, setCart] = useState<typeof products>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const cartTotal = cart.reduce(
+  (total, product) =>
+    total + Number(product.price.replace("$", "")),
+  0
+);
 
   return (
     <main className="min-h-screen bg-[#f7f5f0] text-[#171717]">
@@ -387,7 +392,23 @@ export default function Home() {
                 </div>
               )}
             </div>
+            {cart.length > 0 && (
+  <div className="mt-8 border-t pt-6">
+    <div className="flex items-center justify-between text-sm">
+      <span className="font-medium">Total</span>
+
+      <span className="font-medium">
+        ${cartTotal}
+      </span>
+    </div>
+
+    <button className="mt-6 w-full bg-black py-4 text-sm text-white transition hover:bg-black/80">
+      Checkout
+    </button>
+  </div>
+)}
           </div>
+          
         </div>
       )}
     </main>
