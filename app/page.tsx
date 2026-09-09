@@ -402,9 +402,12 @@ export default function Home() {
       </span>
     </div>
 
-    <button className="mt-6 w-full bg-black py-4 text-sm text-white transition hover:bg-black/80">
-      Checkout
-    </button>
+    <button
+  onClick={() => alert(`Checkout total: $${cartTotal}`)}
+  className="mt-6 w-full bg-black py-4 text-sm text-white transition hover:bg-black/80"
+>
+  Checkout
+</button>
   </div>
 )}
           </div>
