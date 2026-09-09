@@ -1,3 +1,10 @@
+# LuxeCart
+
+A modern premium e-commerce website built with Next.js, TypeScript and Tailwind CSS.
+
+## 🚀 Live Demo
+
+[View LuxeCart Live](https://luxecart-zeta.vercel.app/)
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
