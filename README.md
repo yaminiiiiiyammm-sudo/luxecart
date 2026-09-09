@@ -1,6 +1,6 @@
 # LuxeCart 🛍️
 
-A modern premium e-commerce website built with **Next.js, TypeScript, and Tailwind CSS**.
+A modern premium e-commerce website built with Next.js, React, TypeScript, and Tailwind CSS.
 
 ## 🚀 Live Demo
 
@@ -8,14 +8,17 @@ A modern premium e-commerce website built with **Next.js, TypeScript, and Tailwi
 
 ## ✨ Features
 
-- Premium responsive e-commerce design
-- Product and category sections
-- Add products to cart
+- Premium modern e-commerce design
+- Responsive desktop and mobile layout
+- Product showcase with images
+- Product categories
+- Add to Cart functionality
 - Dynamic cart count
 - Remove products from cart
 - Dynamic cart total
 - Checkout screen
-- Responsive layout for desktop and mobile
+- Order summary
+- Interactive UI
 
 ## 🛠️ Tech Stack
 
@@ -23,16 +26,13 @@ A modern premium e-commerce website built with **Next.js, TypeScript, and Tailwi
 - React
 - TypeScript
 - Tailwind CSS
-- Git & GitHub
+- Git
+- GitHub
 - Vercel
 
-## 📂 Project Structure
+## 💻 Run Locally
 
-```text
-luxecart/
-├── app/
-│   ├── page.tsx
-│   └── ...
-├── public/
-├── package.json
-└── README.md
+Clone the repository:
+
+```bash
+git clone https://github.com/yaminiiiiiyammm-sudo/luxecart.git
