@@ -54,6 +54,7 @@ const categoryImages: Record<string, string> = {
 export default function Home() {
   const [cart, setCart] = useState<typeof products>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const cartTotal = cart.reduce(
   (total, product) =>
     total + Number(product.price.replace("$", "")),
@@ -101,11 +102,17 @@ export default function Home() {
           </button>
 
           <button
-            onClick={() => setIsCartOpen(true)}
-            className="text-lg transition hover:opacity-50"
-          >
-            🛒 {cart.length}
-          </button>
+  onClick={() => setIsCartOpen(true)}
+  className="relative text-lg transition hover:opacity-50"
+>
+  🛒
+
+  {cart.length > 0 && (
+    <span className="absolute -right-3 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-black px-1 text-[10px] text-white">
+      {cart.length}
+    </span>
+  )}
+</button>
         </div>
       </nav>
 
@@ -402,11 +409,14 @@ export default function Home() {
       </span>
     </div>
 
-    <button
-  onClick={() => alert(`Checkout total: $${cartTotal}`)}
+  <button
+  onClick={() => {
+    setIsCartOpen(false);
+    setIsCheckoutOpen(true);
+  }}
   className="mt-6 w-full bg-black py-4 text-sm text-white transition hover:bg-black/80"
 >
-  Checkout
+  Proceed to Checkout
 </button>
   </div>
 )}
@@ -414,6 +424,129 @@ export default function Home() {
           
         </div>
       )}
+      {/* Checkout Screen */}
+{isCheckoutOpen && (
+  <div className="fixed inset-0 z-50 overflow-y-auto bg-[#f7f5f0]">
+    <div className="mx-auto max-w-6xl px-6 py-10 md:px-12">
+      
+      <div className="flex items-center justify-between border-b border-black/10 pb-6">
+        <h2 className="text-2xl font-medium tracking-[0.15em]">
+          LUXECART CHECKOUT
+        </h2>
+
+        <button
+          onClick={() => setIsCheckoutOpen(false)}
+          className="text-sm underline underline-offset-4"
+        >
+          Back to shop
+        </button>
+      </div>
+
+      <div className="grid gap-12 py-10 lg:grid-cols-2">
+        
+        {/* Checkout Form */}
+        <div>
+          <p className="mb-3 text-xs tracking-[0.25em] text-black/50">
+            CUSTOMER DETAILS
+          </p>
+
+          <h3 className="text-3xl font-medium">
+            Complete your order
+          </h3>
+
+          <div className="mt-8 space-y-5">
+            <input
+              type="email"
+              placeholder="Email address"
+              className="w-full border border-black/20 bg-transparent px-4 py-4 text-sm outline-none focus:border-black"
+            />
+
+            <input
+              type="text"
+              placeholder="Full name"
+              className="w-full border border-black/20 bg-transparent px-4 py-4 text-sm outline-none focus:border-black"
+            />
+
+            <input
+              type="text"
+              placeholder="Address"
+              className="w-full border border-black/20 bg-transparent px-4 py-4 text-sm outline-none focus:border-black"
+            />
+
+            <div className="grid grid-cols-2 gap-4">
+              <input
+                type="text"
+                placeholder="City"
+                className="w-full border border-black/20 bg-transparent px-4 py-4 text-sm outline-none focus:border-black"
+              />
+
+              <input
+                type="text"
+                placeholder="Postal code"
+                className="w-full border border-black/20 bg-transparent px-4 py-4 text-sm outline-none focus:border-black"
+              />
+            </div>
+
+            <button
+              onClick={() => alert("Order placed successfully!")}
+              className="mt-4 w-full bg-black py-4 text-sm text-white transition hover:bg-black/80"
+            >
+              Place Order
+            </button>
+          </div>
+        </div>
+
+        {/* Order Summary */}
+        <div className="border border-black/10 bg-white p-6 md:p-8">
+          <p className="text-xs tracking-[0.25em] text-black/50">
+            ORDER SUMMARY
+          </p>
+
+          <div className="mt-6 space-y-5">
+            {cart.map((product, index) => (
+              <div
+                key={`${product.name}-checkout-${index}`}
+                className="flex gap-4"
+              >
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="h-20 w-16 object-cover"
+                />
+
+                <div className="flex-1">
+                  <p className="text-sm font-medium">
+                    {product.name}
+                  </p>
+
+                  <p className="mt-1 text-xs text-black/50">
+                    {product.category}
+                  </p>
+
+                  <p className="mt-2 text-sm">
+                    {product.price}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 border-t border-black/10 pt-6">
+            <div className="flex items-center justify-between">
+              <span className="text-sm">Total</span>
+
+              <span className="text-lg font-medium">
+                ${cartTotal}
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+)}
     </main>
+    
   );
 }
