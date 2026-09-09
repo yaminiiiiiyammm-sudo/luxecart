@@ -5,6 +5,12 @@ A modern premium e-commerce website built with Next.js, React, TypeScript, and T
 ## 🚀 Live Demo
 
 [View LuxeCart Live](https://luxecart-zeta.vercel.app/)
+## 📸 Screenshot
+
+![LuxeCart Screenshot](./Screenshot 2026-09-09 190123.png)
+## 📸 Screenshot
+
+![LuxeCart Screenshot](./Screenshot 2026-09-09 193935.png)
 
 ## ✨ Features
 
